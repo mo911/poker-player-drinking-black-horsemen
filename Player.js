@@ -115,6 +115,8 @@ class Player {
           bet(0);
         } */
     }
+    
+  }else{
     bet(0);
   }
     
