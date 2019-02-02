@@ -47,7 +47,7 @@ class Player {
           "https://poker-odds.p.rapidapi.com/hold-em/odds" +
           "?hand=" + encodeURIComponent(handStrings.join(',')) +
           "&community=" + encodeURIComponent(communityCardsStrings.join(',')) +
-          "&players=4"
+          "&players=" + playerCount(gameState)
         )
         .header("X-RapidAPI-Key", "8109f8ee60mshce6823ffe4eb41bp13b75ejsn5640ab87f615")
         .timeout(5000)
