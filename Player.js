@@ -1,4 +1,4 @@
-//var unirest = require('unirest');
+var unirest = require('unirest');
 
 playerCount = function(gameState) {
   let counter = 0;
@@ -42,7 +42,7 @@ class Player {
       console.error("all-in");
     }
     else{
-      /*try {
+      try {
         unirest.get(
           "https://poker-odds.p.rapidapi.com/hold-em/odds" +
           "?hand=" + encodeURIComponent(handStrings.join(',')) +
@@ -67,14 +67,14 @@ class Player {
       } catch (error) {
         console.error(error);
         bet(0);
-      } */
+      }
 
 
-      if(highCards.includes(hand[0].rank) && highCards.includes(hand[1].rank)){
+      /*if(highCards.includes(hand[0].rank) && highCards.includes(hand[1].rank)){
         bet(gameState.players[2].stack);
       }else{
         bet(0);
-      }
+      }*/
     }
     
   }

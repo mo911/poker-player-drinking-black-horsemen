@@ -7,8 +7,9 @@
   },
   "private": true,
   "dependencies": {
+    "body-parser": "1.15.2",
     "express": "4.x",
-    "body-parser": "1.15.2"
+    "unirest": "^0.5.1"
   },
   "scripts": {
     "dev": "nodemon server.js"
