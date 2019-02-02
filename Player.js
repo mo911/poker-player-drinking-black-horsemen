@@ -47,7 +47,7 @@ class Player {
           "https://poker-odds.p.rapidapi.com/hold-em/odds" +
           "?hand=" + encodeURIComponent(handStrings.join(',')) +
           "&community=" + encodeURIComponent(communityCardsStrings.join(',')) +
-          "&players=" + playerCount(gameState)
+          "&players=4"
         )
         .header("X-RapidAPI-Key", "8109f8ee60mshce6823ffe4eb41bp13b75ejsn5640ab87f615")
         .end(function (result) {
@@ -70,11 +70,11 @@ class Player {
       }
 
 
-      /*if(highCards.includes(hand[0].rank) && highCards.includes(hand[1].rank)){
+      /* if(highCards.includes(hand[0].rank) && highCards.includes(hand[1].rank)){
         bet(gameState.players[2].stack);
       }else{
         bet(0);
-      }*/
+      } */
     }
     
   }
