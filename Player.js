@@ -1,5 +1,7 @@
 var unirest = require('unirest');
 
+var hutchison = require('hutchison');
+
 playerCount = function(gameState) {
   let counter = 0;
   gameState.players.forEach(element => {
@@ -35,17 +37,21 @@ class Player {
     communityCards.forEach(card => {
       communityCardsStrings.push(handToString(card));
     })
+    console.log('COMMUNITY', communityCards.length);
 
     if (playerCount(gameState) == 1) {
       console.log('Csak mi vagyunk, tartunk');
-      bet(gameState.minimum_raise);
+      bet(gameState.minimum_raise ? gameState.minimum_raise : 0);
       return;
     }
-    // PÁR van - All-in
-    if(hand[0].rank == hand[1].rank){
-      bet(gameState.players[2].stack);
-      console.error("all-in");
+
+
+    // Két kártya
+    if (communityCards.length == 0) {
+      console.log(hutchison.texasHoldem({hand: handStrings}));
+      bet(0);
     }
+    // Minimum flop
     else{
       try {
         unirest.get(
