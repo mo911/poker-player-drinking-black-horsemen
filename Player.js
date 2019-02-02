@@ -70,7 +70,7 @@ class Player {
       }
       // Minimum flop
       else{
-        if(gameState.players[2].time_used < 2000000){
+        if(gameState.players[2].time_used < 1500000){
           try {
             unirest.get(
               "https://poker-odds.p.rapidapi.com/hold-em/odds" +
