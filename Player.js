@@ -55,10 +55,10 @@ class Player {
           if (result.body) {
             console.log(result.body);
             var winPercent = result.body.win;
-            if (winPercent > 0.3) {
+            if (winPercent > 0.5) {
               console.error("all-in");
               bet(gameState.players[2].stack);
-            } else if (winPercent > 0.2) {
+            } else if (winPercent > 0.22) {
               console.error("megad");
               bet(gameState.minimum_raise);
             } else {
