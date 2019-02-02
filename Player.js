@@ -36,6 +36,11 @@ class Player {
       communityCardsStrings.push(handToString(card));
     })
 
+    if (playerCount(gameState) == 1) {
+      console.log('Csak mi vagyunk, tartunk');
+      bet(gameState.minimum_raise);
+      return;
+    }
     // PÁR van - All-in
     if(hand[0].rank == hand[1].rank){
       bet(gameState.players[2].stack);
