@@ -70,44 +70,47 @@ class Player {
       }
       // Minimum flop
       else{
-        try {
-          unirest.get(
-            "https://poker-odds.p.rapidapi.com/hold-em/odds" +
-            "?hand=" + encodeURIComponent(handStrings.join(',')) +
-            "&community=" + encodeURIComponent(communityCardsStrings.join(',')) +
-            "&players=" + playerCount(gameState)
-          )
-          .header("X-RapidAPI-Key", "8109f8ee60mshce6823ffe4eb41bp13b75ejsn5640ab87f615")
-          .timeout(1000)
-          .end(function (result) {
-            if (result.body) {
-              console.log(result.body);
-              var winPercent = result.body.win;
-              if (winPercent > 0.6) {
-                console.error("raise");
-                var betAmount = gameState.minimum_raise + 100;
-                bet(betAmount);
-  //              bet(gameState.players[2].stack);
-                } else if (winPercent > 0.3) {
-                console.error("megad max 100");
-                var betAmount = gameState.minimum_raise > 100
-                  ? 100
-                  : gameState.minimum_raise;
-                bet(betAmount);
+        if(gameState.players[2].time_used < 2000000){
+          try {
+            unirest.get(
+              "https://poker-odds.p.rapidapi.com/hold-em/odds" +
+              "?hand=" + encodeURIComponent(handStrings.join(',')) +
+              "&community=" + encodeURIComponent(communityCardsStrings.join(',')) +
+              "&players=" + playerCount(gameState)
+            )
+            .header("X-RapidAPI-Key", "8109f8ee60mshce6823ffe4eb41bp13b75ejsn5640ab87f615")
+            .timeout(1000)
+            .end(function (result) {
+              if (result.body) {
+                console.log(result.body);
+                var winPercent = result.body.win;
+                if (winPercent > 0.6) {
+                  console.error("raise");
+                  var betAmount = gameState.minimum_raise + 100;
+                  bet(betAmount);
+    //              bet(gameState.players[2].stack);
+                  } else if (winPercent > 0.3) {
+                  console.error("megad max 100");
+                  var betAmount = gameState.minimum_raise > 100
+                    ? 100
+                    : gameState.minimum_raise;
+                  bet(betAmount);
+                } else {
+                  console.error("dob");
+                  bet(0);
+                }
               } else {
-                console.error("dob");
+                console.error('timeout');
                 bet(0);
               }
-            } else {
-              console.error('timeout');
-              bet(0);
-            }
-          });
-        } catch (error) {
-          console.error(error);
+            });
+          } catch (error) {
+            console.error(error);
+            bet(0);
+          }
+        }else{
           bet(0);
         }
-
 
         /* if(highCards.includes(hand[0].rank) && highCards.includes(hand[1].rank)){
           bet(gameState.players[2].stack);
