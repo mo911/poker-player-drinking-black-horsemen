@@ -54,9 +54,7 @@ class Player {
       let hutodds = hutchison.texasHoldem({hand: handStrings});
       console.log(hutodds);
       if(hutodds.percentile > 0.90){
-        var betAmount = gameState.minimum_raise > 100
-                ? 100
-                : gameState.minimum_raise;
+        var betAmount = gameState.minimum_raise + 100;
               bet(betAmount);
       }
       else if(hutodds.percentile > 0.50){
