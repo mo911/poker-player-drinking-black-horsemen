@@ -51,14 +51,14 @@ class Player {
 
 
       // Két kártya
-      if (communityCards.length == 0) {
+      if (1) {
         let hutodds = hutchison.texasHoldem({hand: handStrings});
         console.log(hutodds);
-        if(hutodds.percentile > 0.85){
+        if(hutodds.percentile > 0.9){
           var betAmount = gameState.minimum_raise + 100;
                 bet(betAmount);
         }
-        else if(hutodds.percentile > 0.60){
+        else if(hutodds.percentile > 0.70){
           var betAmount = gameState.minimum_raise > 100
                   ? 100
                   : gameState.minimum_raise;
