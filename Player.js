@@ -59,8 +59,11 @@ class Player {
               console.error("all-in");
               bet(gameState.players[2].stack);
             } else if (winPercent > 0.3) {
-              console.error("megad");
-              bet(gameState.minimum_raise);
+              console.error("megad max 100");
+              var betAmount = gameState.minimum_raise > 100
+                ? 100
+                : gameState.minimum_raise;
+              bet(betAmount);
             } else {
               console.error("dob");
               bet(0);
