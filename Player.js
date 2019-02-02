@@ -13,7 +13,10 @@ playerCount = function(gameState) {
 }
 
 handToString = function(hand) {
-  return hand.rank + hand.suit[0]
+  let rank = hand.rank != '10'
+    ? hand.rank
+    : 'T'
+  return rank + hand.suit[0]
 }
 
 class Player {
