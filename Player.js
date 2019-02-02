@@ -1,3 +1,14 @@
+
+playerCount = function(gameState) {
+  let counter = 0;
+  gameState.players.forEach(element => {
+    if(element.status == "active"){
+      counter++;
+    }
+  });
+  return counter;
+}
+
 class Player {
   static get VERSION() {
     return '0.3';
@@ -6,6 +17,7 @@ class Player {
   static betRequest(gameState, bet) {
     let highCards = ['A','K','Q','J'];
 
+    console.error(playerCount(gameState));
     console.error(gameState.players[2].hole_cards);
     if(gameState.players[2].hole_cards[0].rank == gameState.players[2].hole_cards[1].rank){
       bet(gameState.players[2].stack);
