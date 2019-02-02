@@ -2,6 +2,8 @@ var unirest = require('unirest');
 
 var hutchison = require('hutchison');
 
+var pokerRanking = require('poker-ranking');
+
 playerCount = function(gameState) {
   let counter = 0;
   gameState.players.forEach(element => {
@@ -19,9 +21,21 @@ handToString = function(hand) {
   return rank + hand.suit[0]
 }
 
+raiseAtLeast = function(gameState, amount) {
+  return gameState.minimum_raise > amount
+    ? gameState.minimum_raise
+    : parseInt(amount);
+}
+
+holdMax = function(gameState, amount) {
+  return gameState.minimum_raise < amount
+    ? gameState.minimum_raise
+    : parseInt(amount);
+}
+
 class Player {
   static get VERSION() {
-    return '0.4';
+    return '0.5';
   }
 
   static betRequest(gameState, bet) {
@@ -50,8 +64,44 @@ class Player {
       }
 
 
-      // Két kártya
-      if (1) {
+      // Flop után és csak 2en vagyunk
+      if ( communityCards.length > 0 && playerCount(gameState) == 2 ) {
+        let allCards = handStrings.concat(communityCardsStrings);
+        console.log(allCards);
+        var evalResults = pokerRanking.evaluateAndFindCards(allCards);
+        console.log('Eval Results', evalResults);
+
+        let betAmount = 0;
+        let currentChip = gameState.players[2].stack;
+        switch(evalResults.match) {
+          case "pair":
+            betAmount = holdMax(gameState, currentChip * 0.1);
+            break;
+          case "2pair":
+            betAmount = raiseAtLeast(gameState, currentChip * 0.2);
+            break;
+          case "3ofakind":
+            betAmount = raiseAtLeast(gameState, currentChip * 0.3);
+            break;
+          case "straight":
+            betAmount = raiseAtLeast(gameState, currentChip * 0.4);
+            break;
+          case "flush":
+            betAmount = raiseAtLeast(gameState, currentChip * 0.5);
+            break;
+          case "fullhouse":
+          case "4ofakind":
+          case "straightflush":
+          case "royalflush":
+          case "5ofakind":
+            betAmount = raiseAtLeast(gameState, currentChip * 0.6);
+            break;
+          default:
+            break;
+        }
+        bet(betAmount);
+      } else {
+
         let hutodds = hutchison.texasHoldem({hand: handStrings});
         console.log(hutodds);
         if(hutodds.percentile > 0.9){
@@ -66,10 +116,9 @@ class Player {
         }else{
           bet(0);
         }
-        
       }
       // Minimum flop
-      else{
+      /* else{
         if(gameState.players[2].time_used < 2000000){
           try {
             unirest.get(
@@ -111,13 +160,7 @@ class Player {
         }else{
           bet(0);
         }
-
-        /* if(highCards.includes(hand[0].rank) && highCards.includes(hand[1].rank)){
-          bet(gameState.players[2].stack);
-        }else{
-          bet(0);
-        } */
-    }
+      } */
     
   }else{
     bet(0);

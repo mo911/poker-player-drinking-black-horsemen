@@ -10,8 +10,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/', (req, res) => {
-  console.error('HEADER', req.headers);
-  console.error('BODY', req.body);
   const { action, game_state } = req.body;
 
   switch (action) {
@@ -19,6 +17,7 @@ app.post('/', (req, res) => {
       res.send(Player.VERSION);
       break;
     case 'bet_request':
+      console.error('BODY', req.body);
       Player.betRequest(JSON.parse(game_state), function(bet) {
         res.json(bet);
       });

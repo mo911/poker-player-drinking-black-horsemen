@@ -10,6 +10,7 @@
     "body-parser": "1.15.2",
     "express": "4.x",
     "hutchison": "^2.0.2",
+    "poker-ranking": "^1.1.2",
     "unirest": "^0.5.1"
   },
   "scripts": {
