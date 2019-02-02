@@ -54,11 +54,11 @@ class Player {
       if (communityCards.length == 0) {
         let hutodds = hutchison.texasHoldem({hand: handStrings});
         console.log(hutodds);
-        if(hutodds.percentile > 0.90){
+        if(hutodds.percentile > 0.85){
           var betAmount = gameState.minimum_raise + 100;
                 bet(betAmount);
         }
-        else if(hutodds.percentile > 0.50){
+        else if(hutodds.percentile > 0.60){
           var betAmount = gameState.minimum_raise > 100
                   ? 100
                   : gameState.minimum_raise;
@@ -89,7 +89,7 @@ class Player {
                   var betAmount = gameState.minimum_raise + 100;
                   bet(betAmount);
     //              bet(gameState.players[2].stack);
-                  } else if (winPercent > 0.3) {
+                  } else if (winPercent > 0.35) {
                   console.error("megad max 100");
                   var betAmount = gameState.minimum_raise > 100
                     ? 100
