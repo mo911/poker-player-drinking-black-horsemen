@@ -65,7 +65,8 @@ class Player {
 
 
       // Flop után és csak 2en vagyunk
-      if ( 0 ) {
+      if ( communityCards.length > 0 && playerCount(gameState) < 4 ) {
+//      if ( 0 ) {
         let allCards = handStrings.concat(communityCardsStrings);
         console.log(allCards);
         var evalResults = pokerRanking.evaluateAndFindCards(allCards);
@@ -102,17 +103,16 @@ class Player {
         bet(betAmount);
       } else {
 
+        let currentChip = gameState.players[2].stack;
         let hutodds = hutchison.texasHoldem({hand: handStrings});
         console.log(hutodds);
         if(hutodds.percentile > 0.9){
-          var betAmount = gameState.minimum_raise + 100;
-                bet(betAmount);
+          var betAmount = raiseAtLeast(gameState, currentChip * 0.2);
+          bet(betAmount);
         }
         else if(hutodds.percentile > 0.70){
-          var betAmount = gameState.minimum_raise > 100
-                  ? 100
-                  : gameState.minimum_raise;
-                bet(betAmount);
+          var betAmount = holdMax(gameState, currentChip * 0.05);
+          bet(betAmount);
         }else{
           bet(0);
         }
