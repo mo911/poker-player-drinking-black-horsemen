@@ -50,17 +50,23 @@ class Player {
           "&players=4"
         )
         .header("X-RapidAPI-Key", "8109f8ee60mshce6823ffe4eb41bp13b75ejsn5640ab87f615")
+        .timeout(5000)
         .end(function (result) {
-          console.log(result.body);
-          var winPercent = result.body.win;
-          if (winPercent > 0.3) {
-            console.error("all-in");
-            bet(gameState.players[2].stack);
-          } else if (winPercent > 0.2) {
-            console.error("megad");
-            bet(gameState.minimum_raise);
+          if (result.body) {
+            console.log(result.body);
+            var winPercent = result.body.win;
+            if (winPercent > 0.3) {
+              console.error("all-in");
+              bet(gameState.players[2].stack);
+            } else if (winPercent > 0.2) {
+              console.error("megad");
+              bet(gameState.minimum_raise);
+            } else {
+              console.error("dob");
+              bet(0);
+            }
           } else {
-            console.error("dob");
+            console.error('timeout');
             bet(0);
           }
         });
