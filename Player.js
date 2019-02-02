@@ -65,7 +65,7 @@ class Player {
 
 
       // Flop után és csak 2en vagyunk
-      if ( communityCards.length > 0 && playerCount(gameState) == 2 ) {
+      if ( 0 ) {
         let allCards = handStrings.concat(communityCardsStrings);
         console.log(allCards);
         var evalResults = pokerRanking.evaluateAndFindCards(allCards);
