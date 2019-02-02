@@ -48,8 +48,23 @@ class Player {
 
     // Két kártya
     if (communityCards.length == 0) {
-      console.log(hutchison.texasHoldem({hand: handStrings}));
-      bet(0);
+      let hutodds = hutchison.texasHoldem({hand: handStrings});
+      console.log(hutodds);
+      if(hutodds.percentile > 0.90){
+        var betAmount = gameState.minimum_raise > 100
+                ? 100
+                : gameState.minimum_raise;
+              bet(betAmount);
+      }
+      else if(hutodds.percentile > 0.50){
+        var betAmount = gameState.minimum_raise > 100
+                ? 100
+                : gameState.minimum_raise;
+              bet(betAmount);
+      }else{
+        bet(0);
+      }
+      
     }
     // Minimum flop
     else{
