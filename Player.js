@@ -55,7 +55,7 @@ class Player {
           "&players=" + playerCount(gameState)
         )
         .header("X-RapidAPI-Key", "8109f8ee60mshce6823ffe4eb41bp13b75ejsn5640ab87f615")
-        .timeout(5000)
+        .timeout(1000)
         .end(function (result) {
           if (result.body) {
             console.log(result.body);
